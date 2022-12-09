@@ -21,6 +21,8 @@
 
 Firing the weapon at the structure will add to the structures "Pre-Mitigation Damage" value. The total value added per ammo spent is listed in the "Burn per ammo" column.
 
+$$ PreMitigationValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo $$
+
 | Weapon | Max Ammo | Burning Multiplier | Burn per ammo |
 | - | - | - | - |
 | Willow's Bane (W) | 55 | 0.2 | 11 |
@@ -34,6 +36,8 @@ Firing the weapon at the structure will add to the structures "Pre-Mitigation Da
 ## Entities mitigation values
 
 Every 5 seconds, the structure will take the current "Pre-Mitigation Damage" value and apply the structure types mitigation to the value. The amount removed is shown in the table below.
+
+$$ PostMitigationValue = PreMitigationValue - (PreMitigationValue * MitigationPercentage)  $$
 
 | Entity | Mitigation
 | --- | --- |
@@ -66,6 +70,16 @@ When your character reaches a burn value of 1, you will ignite on fire. The "Cha
 | 25.0 | 0.25 | 5.0 | 0.5 | Blazing |
 | 40.0 | 0.25 | 5.0 | 0.5 | Blazing2 |
 
+### Examples
+
+Colonial Flamethrower against Tier 2 Bunker
+$$ PreMitigation = 15 =(1 *0.2)* 75 $$
+$$ FireIntensityMedium = 9 = 15 - (15 * 0.4 ) $$
+
+Noble Firebrand Mk: XVII against Tier 2 Garrison House
+$$ PreMitigation = 90 = (1 *0.6)* 150$$
+$$ FireIntensityHigh = 22.5 = 90 - (90 * 0.75)$$
+
 ## Important factors
 
 The max "Pre-Mitigation Damage" value is currently 200. This means a Tier 3 Structure can only ever reach a medium intensity fire. ( 200 - (200 x 0.95)) = 10
@@ -78,7 +92,7 @@ The weather has a multiplier effect on fires of 8.0, we can assume this is for e
 
 ## Water
 
-Water interacts on the "Pre-Mitigation" value that the strucutre has accumulated either from an ongoing fire that is self sustaining or from a flamethrower that has added to the value. Water however moves the value in the opposite direction.
+Water interacts on the "Pre-Mitigation" value that the structure has accumulated either from an ongoing fire that is self sustaining or from a flamethrower that has added to the value. Water however moves the value in the opposite direction.
 
 | Ammo | Added Burning | Added Heat |
 | - | - | - |
@@ -96,4 +110,3 @@ The fire truck has an inventory of 15 which means a single fire truck can remove
 | Water Bucket | 2 | N/A | 6 |
 | R-12b - “Salva” Flame Truck (C) | 100 | 0.35 | 35 |
 | Dunne Dousing Engine 3r (W) | 100 | 0.35 | 35 |
-
