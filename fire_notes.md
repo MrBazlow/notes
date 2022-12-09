@@ -77,8 +77,8 @@ $$ PreMitigation = 15 =(1 *0.2)* 75 $$
 $$ FireIntensityMedium = 9 = 15 - (15 * 0.4 ) $$
 
 Noble Firebrand Mk: XVII against Tier 2 Garrison House
-$$ PreMitigation = 90 = (1 *0.6)* 150$$
-$$ FireIntensityHigh = 22.5 = 90 - (90 * 0.75)$$
+$$ PreMitigation = 90 = (1 *0.6)* 150 $$
+$$ FireIntensityHigh = 22.5 = 90 - (90 * 0.75) $$
 
 ## Important factors
 
