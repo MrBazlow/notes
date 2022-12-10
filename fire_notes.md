@@ -49,7 +49,8 @@ $$ PostMitigationFireValue = PreMitigationFireValue - (PreMitigationFireValue * 
 
 ## Water
 
-Water interacts on a separate "Pre-Mitigation" extinguish value that each structure has. This value is accumulated either from fire trucks applying water to the structure or characters throwing buckets of water on the structure. As the system is based off the fire system, the names are similar in nature.
+
+Water interacts on a separate "Pre-Mitigation" extinguish value that each structure has. This value is accumulated from tools which apply extinguishing damage type to the structure such as the ammo types below. As the system is based off the fire system above, the names are similar in nature.
 
 | Ammo | Added Burning | Added Heat |
 | - | - | - |
@@ -59,6 +60,8 @@ Water interacts on a separate "Pre-Mitigation" extinguish value that each struct
 ## Firefighting tools and their stats
 
 To counter fires we have water buckets which come in crates of 80 and fire trucks which must be created at player built facilities. These tools have distinctly different levels of efficacy and may be located in different parts of the tech tree as a result.
+
+The total value added to the "Pre-Mitigation" extinguish value per ammo spent is listed in the "Extinguish per ammo" column.
 
 ```math
 PreMitigationExtinguishValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo
@@ -72,10 +75,10 @@ PreMitigationExtinguishValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)
 
 ## Entities water mitigation values
 
-While a "Pre-Mitigation" burning value of 200 means a raging fire on a Tier 1 structure, it means a medium fire on Tier 3 structure. To ensure that the impact of putting out the fire feels consistent with the size of the fire, a separate set of mitigation values are used to calculate the impact of water on the structure. This stage is also where the calculated burning value and the calculated extinguish value will interact with each other.
+While a "Pre-Mitigation" burning value of 200 means a raging fire on a Tier 1 structure, it means a medium fire on Tier 3 structure. To ensure that the impact of putting out the fire feels consistent with the size of the fire, a separate set of mitigation values are used to calculate the impact of water on the structure; these values are inversely proportional to the fire mitigation values. 
 
 ```math
-PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExtinguishValue * MitigationPercentage)
+PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExtinguishValue * WaterMitigationPercentage)
 ```
 
 | Entity | Mitigation |
@@ -96,7 +99,7 @@ PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExt
 
 ## Fire Intensity Thresholds
 
-The "Post-Mitigation" burn value after it has been subtracted by the "Post-Mitigation" extinguish value gives the Damage value. This value is the amount of damage done to the health of the structure from the damage over time effect. This value is also the determining factor for the intensity of the structure fire. A fire is self sustaining at Low intensity and will grow in strength independently when the gain rate is greater than the decay rate, when a fire reaches the Blazing intensity it will have the ability to spread to nearby structures.
+The Damage value is calculated by subtracting the "Post-Mitigation" extinguish value from the "Post-Mitigation" burn value. This value is the amount of damage done to the health of the structure from the damage over time effect every five seconds. It is also the determining factor for the intensity of the structures fire. A fire is self sustaining at Low intensity and will grow in strength independently when the gain rate is greater than the decay rate, when a fire reaches the Blazing intensity it will have the ability to spread to nearby structures.
 
 | Damage value | Fire Damage Gain Rate | Fire Damage Decay Rate | Intensity |
 | --- | --- | --- | --- |
@@ -145,7 +148,7 @@ PostMitigationFire = Damage
 Damage > 25 \to FireIntensityBlazing
 ```
 
-Character with a full water bucket and 8 Water in their inventory putting out the previous Tier 2 Garrison house fire
+Character with a full water bucket and 8 Water in their inventory putting out the previous Tier 2 Garrison House fire
 
 ```math
 PreMitigationExtinguish = 30 = (3 * 1) * 10
