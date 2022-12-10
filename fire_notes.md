@@ -145,7 +145,7 @@ PostMitigationFire = Damage
 ```
 
 ```math
-Damage > 25 \to FireIntensityBlazing
+Damage > 25 \to FireIntensityHigh
 ```
 
 Character with a full water bucket and 8 Water in their inventory putting out the previous Tier 2 Garrison House fire
@@ -177,7 +177,7 @@ PreMitigationExtinguish = 70 = (2 * 0.35) * 100
 ```
 
 ```math
-PostMitigationExtinguish = 35 = 70 - (70 * 0.5)
+PostMitigationExtinguish = 24.5 = 70 - (70 * 0.65)
 ```
 
 ```math
@@ -185,7 +185,7 @@ PostMitigationFire - PostMitigationExtinguish = Damage
 ```
 
 ```math
-22.5 - 35 = -12.5
+22.5 - 24.5 = -2
 ```
 
 ```math
