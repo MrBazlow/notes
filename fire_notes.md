@@ -1,13 +1,5 @@
 # Fire Mechanics
 
-## Two stats to fire weapons
-
-1. Added Burning
-   - Structure Burn Damage
-
-2. Added Heat
-   - Player Burn Damage
-
 ## Ammo and their key stats
 
 | Ammo | Added Burning | Added Heat |
@@ -21,7 +13,7 @@
 
 Firing the weapon at the structure will add to the structures "Pre-Mitigation Damage" value. The total value added per ammo spent is listed in the "Burn per ammo" column.
 
-$$ PreMitigationValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo $$
+$$ PreMitigationFireValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo $$
 
 | Weapon | Max Ammo | Burning Multiplier | Burn per ammo |
 | - | - | - | - |
@@ -33,13 +25,13 @@ $$ PreMitigationValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmm
 | Noble Firebrand Mk: XVII (W) | 150 | 0.6 | 90 |
 | Flood Juggernaut Mk. VII (W) | 150 | 0.6 | 90 |
 
-## Entities mitigation values
+## Entities fire mitigation values
 
-Every 5 seconds, the structure will take the current "Pre-Mitigation Damage" value and apply the structure types mitigation to the value. The amount removed is shown in the table below.
+Every 5 seconds, the structure will take the current "Pre-Mitigation" burn value and apply the structure types mitigation to the value to create the "Post-Mitigation" burn value. The amount removed is shown in the table below.
 
-$$ PostMitigationValue = PreMitigationValue - (PreMitigationValue * MitigationPercentage)  $$
+$$ PostMitigationFireValue = PreMitigationFireValue - (PreMitigationFireValue * FireMitigationPercentage)  $$
 
-| Entity | Mitigation
+| Entity | Mitigation |
 | --- | --- |
 | Light Vehicles | 0% |
 | Tier 1 Tank | 80% |
@@ -55,52 +47,9 @@ $$ PostMitigationValue = PreMitigationValue - (PreMitigationValue * MitigationPe
 | Tier 3 Garrison House | 75% |
 | Trench | 95% |
 
-## Fire Intensity Thresholds
-
-The "Pre-Mitigation" value after it has been calculated with the mitigation value gives the "Post-Mitigation" value. This value is the amount of damage done to the health of the structure from the damage over time effect. A fire is self sustaining at Low intensity and will grow in strength independently when the gain rate is greater than the decay rate.
-
-When your character reaches a burn value of 1, you will ignite on fire. The "Character Burn" value represents how much the fire adds to your character burn value at each 5 second tick.
-
-| "Post-Mitigation" value | Character Burn | Fire Damage Gain Rate | Fire Damage Decay Rate | Intensity |
-| --- | --- | --- | --- | --- |
-| -1 | 0.0 | 0.0 | 0.0 | None |
-| 0.0 | 0.15 | 0.5 | 0.5 | Low |
-| 8.0 | 0.15 | 2.0 | 0.5 | Medium |
-| 16.0 | 0.15 | 3.5 | 0.5 | High |
-| 25.0 | 0.25 | 5.0 | 0.5 | Blazing |
-| 40.0 | 0.25 | 5.0 | 0.5 | Blazing2 |
-
-### Examples
-
-Colonial Flamethrower against Tier 2 Bunker
-```math 
-PreMitigation = 15 =(1 *0.2)* 75
-```
-```math
-FireIntensityMedium = 9 = 15 - (15 * 0.4 )
-```
-
-Noble Firebrand Mk: XVII against Tier 2 Garrison House
-```math
-PreMitigation = 90 = (1 *0.6)* 150
-```
-```math
-FireIntensityHigh = 22.5 = 90 - (90 * 0.75)
-```
-
-## Important factors
-
-The max "Pre-Mitigation Damage" value is currently 200. This means a Tier 3 Structure can only ever reach a medium intensity fire. ( 200 - (200 x 0.95)) = 10
-
-The range of the Character Burn value is currently 6 meters.
-
-A character on fire will take 10 damage per second. You have 100 health so have 10 seconds to extinguish yourself of you will burn to death.
-
-The weather has a multiplier effect on fires of 8.0, we can assume this is for each weather intensity level and that it inversely impacts the "Pre-Mitigation Value" by that factor.
-
 ## Water
 
-Water interacts on the "Pre-Mitigation" value that the structure has accumulated either from an ongoing fire that is self sustaining or from a flamethrower that has added to the value. Water however moves the value in the opposite direction.
+Water interacts on a separate "Pre-Mitigation" extinguish value that each structure has. This value is accumulated either from fire trucks applying water to the structure or characters throwing buckets of water on the structure. As the system is based off the fire system, the names are similar in nature.
 
 | Ammo | Added Burning | Added Heat |
 | - | - | - |
@@ -109,12 +58,147 @@ Water interacts on the "Pre-Mitigation" value that the structure has accumulated
 
 ## Firefighting tools and their stats
 
-To counter fires we have water buckets which come in crates of 80 and fire trucks which must be modified at a facility. The water bucket can be reloaded twice to have two tosses of water in it and a character typically can hold 8 inventory items. This means a character with a full loadout can remove 30 units from the "Pre-Mitigation" value.
+To counter fires we have water buckets which come in crates of 80 and fire trucks which must be created at player built facilities. These tools have distinctly different levels of efficacy and may be located in different parts of the tech tree as a result.
 
-The fire truck has an inventory of 15 which means a single fire truck can remove 525 units from the "Pre-Mitigation" value before running out of reloads.
+```math
+PreMitigationExtinguishValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo
+```
 
-| Tool | Max Ammo | Burning Multiplier | Burn per ammo |
+| Tool | Max Ammo | Extinguish Multiplier | Extinguish per ammo |
 | - | - | - | - |
-| Water Bucket | 2 | N/A | 6 |
-| R-12b - “Salva” Flame Truck (C) | 100 | 0.35 | 35 |
-| Dunne Dousing Engine 3r (W) | 100 | 0.35 | 35 |
+| Water Bucket | 2 | null | 6 |
+| R-12b - “Salva” Flame Truck (C) | 100 | 0.35 | 70 |
+| Dunne Dousing Engine 3r (W) | 100 | 0.35 | 70 |
+
+## Entities water mitigation values
+
+While a "Pre-Mitigation" burning value of 200 means a raging fire on a Tier 1 structure, it means a medium fire on Tier 3 structure. To ensure that the impact of putting out the fire feels consistent with the size of the fire, a separate set of mitigation values are used to calculate the impact of water on the structure. This stage is also where the calculated burning value and the calculated extinguish value will interact with each other.
+
+```math
+PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExtinguishValue * MitigationPercentage)
+```
+
+| Entity | Mitigation |
+| --- | --- |
+| Light Vehicle | 100% |
+| Tier 1 Tank | 100% |
+| Tier 2 Tank | 100% |
+| Tier 0 Structure | 99% |
+| Tier 1 Structure | 66% |
+| Tier 2 Structure | 33% |
+| Tier 2 BStructure | 33% |
+| Tier 3 Structure | 0% |
+| Heavy Build Site | 50% |
+| Tier 1 Garrison House | 80% |
+| Tier 2 Garrison House | 65% |
+| Tier 3 Garrison House | 50% |
+| Trench | 0% |
+
+## Fire Intensity Thresholds
+
+The "Post-Mitigation" burn value after it has been subtracted by the "Post-Mitigation" extinguish value gives the Damage value. This value is the amount of damage done to the health of the structure from the damage over time effect. This value is also the determining factor for the intensity of the structure fire. A fire is self sustaining at Low intensity and will grow in strength independently when the gain rate is greater than the decay rate, when a fire reaches the Blazing intensity it will have the ability to spread to nearby structures.
+
+| Damage value | Fire Damage Gain Rate | Fire Damage Decay Rate | Intensity |
+| --- | --- | --- | --- |
+| -1 | 0.0 | 0.0 | None |
+| 0.0 | 0.5 | 0.5 | Low |
+| 8.0 | 2.0 | 0.5 | Medium |
+| 16.0 | 3.5 | 0.5 | High |
+| 25.0 | 5.0 | 0.5 | Blazing |
+| 40.0 | 5.0 | 0.5 | Blazing2 |
+
+### Examples
+
+Warden Flamethrower against Tier 2 Bunker
+
+```math
+PreMitigationFire = 11 =(1 *0.2)* 55
+```
+
+```math
+PostMitigationFire = 6.6 = 11 - (11 * 0.4 )
+```
+
+```math
+PostMitigationFire = Damage
+```
+
+```math
+Damage > 0 \to FireIntensityLow
+```
+
+Noble Firebrand Mk: XVII against Tier 2 Garrison House
+
+```math
+PreMitigationFire = 90 = (1 *0.6)* 150
+```
+
+```math
+PostMitigationFire = 22.5 = 90 - (90 * 0.75)
+```
+
+```math
+PostMitigationFire = Damage
+```
+
+```math
+Damage > 25 \to FireIntensityBlazing
+```
+
+Character with a full water bucket and 8 Water in their inventory putting out the previous Tier 2 Garrison house fire
+
+```math
+PreMitigationExtinguish = 30 = (3 * 1) * 10
+```
+
+```math
+PostMitigationExtinguish = 10.5 = 30 - (30 * 0.65)
+```
+
+```math
+PostMitigationFire - PostMitigationExtinguish = Damage
+```
+
+```math
+22.5 - 10.5 = 12
+```
+
+```math
+Damage > 8 \to FireIntensityMedium
+```
+
+A fire truck with one bottle of water is putting out the fire at the Tier 2 Garrison House that the Noble Firebrand Mk: XVII set alight
+
+```math
+PreMitigationExtinguish = 70 = (2 * 0.35) * 100
+```
+
+```math
+PostMitigationExtinguish = 35 = 70 - (70 * 0.5)
+```
+
+```math
+PostMitigationFire - PostMitigationExtinguish = Damage
+```
+
+```math
+22.5 - 35 = -12.5
+```
+
+```math
+Damage < -1 \to FireIntensityNone
+```
+
+## Important factors
+
+The max "Pre-Mitigation Damage" value is currently 200. This means a Tier 3 Structure can only ever reach a medium intensity fire.
+
+```math
+FireIntensityMedium = 10 = 200 - (200 * 0.95)
+```
+
+### Weather
+
+During a Weather event (Snow or Rain), each five second tick will also include a passive increase to the "Pre-Mitigation" extinguish value in a way similar to applying a bucket of water to the structure. There are three tiers of each weather event and the value added increases in a linear fashion.
+
+However weather events will also have higher levels of wind which if a Blazing intensity fire is created will more rapidly spread to other structures nearby.
