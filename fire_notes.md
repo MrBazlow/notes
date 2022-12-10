@@ -137,7 +137,7 @@ PreMitigationFire = 90 = (1 *0.6)* 150
 ```
 
 ```math
-PostMitigationFire = 22.5 = 90 - (90 * 0.75)
+PostMitigationFire = 45 = 90 - (90 * 0.5)
 ```
 
 ```math
@@ -145,7 +145,7 @@ PostMitigationFire = Damage
 ```
 
 ```math
-Damage > 25 \to FireIntensityHigh
+Damage > 40 \to FireIntensityBlazing2
 ```
 
 Character with a full water bucket and 8 Water in their inventory putting out the previous Tier 2 Garrison House fire
@@ -163,11 +163,11 @@ PostMitigationFire - PostMitigationExtinguish = Damage
 ```
 
 ```math
-22.5 - 10.5 = 12
+45 - 10.5 = 34.5
 ```
 
 ```math
-Damage > 8 \to FireIntensityMedium
+Damage > 25 \to FireIntensityBlazing
 ```
 
 A fire truck with one bottle of water is putting out the fire at the Tier 2 Garrison House that the Noble Firebrand Mk: XVII set alight
@@ -185,11 +185,11 @@ PostMitigationFire - PostMitigationExtinguish = Damage
 ```
 
 ```math
-22.5 - 24.5 = -2
+45 - 24.5 = 20.5
 ```
 
 ```math
-Damage < -1 \to FireIntensityNone
+Damage > 16 \to FireIntensityHigh
 ```
 
 ## Important factors
