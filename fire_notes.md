@@ -42,9 +42,9 @@ $$ PostMitigationFireValue = PreMitigationFireValue - (PreMitigationFireValue * 
 | Tier 2 BStructure | 40% |
 | Tier 3 Structure | 95% |
 | Heavy Build Site | 50% |
-| Tier 1 Garrison House | 25% |
-| Tier 2 Garrison House | 50% |
-| Tier 3 Garrison House | 75% |
+| Tier 1 Garrison House | 20% |
+| Tier 2 Garrison House | 40% |
+| Tier 3 Garrison House | 60% |
 | Trench | 95% |
 
 ## Water
@@ -93,8 +93,8 @@ PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExt
 | Tier 3 Structure | 0% |
 | Heavy Build Site | 50% |
 | Tier 1 Garrison House | 80% |
-| Tier 2 Garrison House | 65% |
-| Tier 3 Garrison House | 50% |
+| Tier 2 Garrison House | 60% |
+| Tier 3 Garrison House | 40% |
 | Trench | 0% |
 
 ## Fire Intensity Thresholds
@@ -137,7 +137,7 @@ PreMitigationFire = 90 = (1 *0.6)* 150
 ```
 
 ```math
-PostMitigationFire = 45 = 90 - (90 * 0.5)
+PostMitigationFire = 54 = 90 - (90 * 0.4)
 ```
 
 ```math
@@ -155,7 +155,7 @@ PreMitigationExtinguish = 30 = (3 * 1) * 10
 ```
 
 ```math
-PostMitigationExtinguish = 10.5 = 30 - (30 * 0.65)
+PostMitigationExtinguish = 12 = 30 - (30 * 0.60)
 ```
 
 ```math
@@ -163,11 +163,11 @@ PostMitigationFire - PostMitigationExtinguish = Damage
 ```
 
 ```math
-45 - 10.5 = 34.5
+54 - 12 = 42
 ```
 
 ```math
-Damage > 25 \to FireIntensityBlazing
+Damage > 40 \to FireIntensityBlazing2
 ```
 
 A fire truck with one bottle of water is putting out the fire at the Tier 2 Garrison House that the Noble Firebrand Mk: XVII set alight
@@ -177,7 +177,7 @@ PreMitigationExtinguish = 70 = (2 * 0.35) * 100
 ```
 
 ```math
-PostMitigationExtinguish = 24.5 = 70 - (70 * 0.65)
+PostMitigationExtinguish = 24.5 = 70 - (70 * 0.60)
 ```
 
 ```math
@@ -185,11 +185,11 @@ PostMitigationFire - PostMitigationExtinguish = Damage
 ```
 
 ```math
-45 - 24.5 = 20.5
+54 - 28 = 26
 ```
 
 ```math
-Damage > 16 \to FireIntensityHigh
+Damage > 25 \to FireIntensityBlazing
 ```
 
 ## Important factors
