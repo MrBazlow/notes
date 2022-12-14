@@ -15,15 +15,15 @@ Firing the weapon at the structure will add to the structures "Pre-Mitigation Da
 
 $$ PreMitigationFireValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)*MaxAmmo $$
 
-| Weapon | Max Ammo | Burning Multiplier | Burn per ammo |
-| - | - | - | - |
-| Willow's Bane (W) | 55 | 0.2 | 11 |
-| "Molten Wind” v.II (C) | 75 | 0.2 | 15 |
-| T14 "Vesta" Tankette (C) | 100 | 0.2 | 20 |
-| H-19 "Vulcan" (C) | 100 | 0.2 | 20 |
-| O'Brien V.130 Wild Jack (W) | 100 | 0.2 | 20 |
-| Noble Firebrand Mk: XVII (W) | 150 | 0.6 | 90 |
-| Flood Juggernaut Mk. VII (W) | 150 | 0.6 | 90 |
+| Weapon | Max Ammo | Burning Multiplier | Burn per ammo | Reach |
+| - | - | - | - | - |
+| Willow's Bane (W) | 55 | 0.2 | 11 | 15m |
+| "Molten Wind” v.II (C) | 75 | 0.2 | 15 | 15m |
+| T14 "Vesta" Tankette (C) | 100 | 0.2 | 20 | 18m |
+| H-19 "Vulcan" (C) | 100 | 0.2 | 20 | 20m |
+| O'Brien V.130 Wild Jack (W) | 100 | 0.2 | 20 | 18m |
+| Noble Firebrand Mk: XVII (W) | 150 | 0.6 | 90 | 20m |
+| Flood Juggernaut Mk. VII (W) | 150 | 0.6 | 90 | 20m |
 
 ## Entities fire mitigation values
 
@@ -48,7 +48,6 @@ $$ PostMitigationFireValue = PreMitigationFireValue - (PreMitigationFireValue * 
 | Trench | 95% |
 
 ## Water
-
 
 Water interacts on a separate "Pre-Mitigation" extinguish value that each structure has. This value is accumulated from tools which apply extinguishing damage type to the structure such as the ammo types below. As the system is based off the fire system above, the names are similar in nature.
 
@@ -75,7 +74,7 @@ PreMitigationExtinguishValue = (AmmoAddedBurningValue * WeaponBurningMultiplier)
 
 ## Entities water mitigation values
 
-While a "Pre-Mitigation" burning value of 200 means a raging fire on a Tier 1 structure, it means a medium fire on Tier 3 structure. To ensure that the impact of putting out the fire feels consistent with the size of the fire, a separate set of mitigation values are used to calculate the impact of water on the structure; these values are inversely proportional to the fire mitigation values. 
+While a "Pre-Mitigation" burning value of 200 means a raging fire on a Tier 1 structure, it means a medium fire on Tier 3 structure. To ensure that the impact of putting out the fire feels consistent with the size of the fire, a separate set of mitigation values are used to calculate the impact of water on the structure; these values are inversely proportional to the fire mitigation values.
 
 ```math
 PostMitigationExtinguishValue = PreMitigationExtinguishValue - (PreMitigationExtinguishValue * WaterMitigationPercentage)
